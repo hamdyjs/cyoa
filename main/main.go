@@ -12,6 +12,7 @@ func main() {
 	fileFlag := flag.String("file", "gopher.json", "The json file containing the story")
 	flag.Parse()
 
+	fmt.Println("Running story from file:", *fileFlag)
 	file, err := os.Open(*fileFlag)
 	if err != nil {
 		fmt.Println(err)
