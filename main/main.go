@@ -8,6 +8,19 @@ import (
 	cyoa "github.com/hamdyjs/go_cyoa"
 )
 
+var webTmpl = `
+<body>
+	<h1>{{.Title}}</h1>
+	{{range .Paragraphs}}
+		<p>{{.}}</p>
+	{{end}}
+	<ul>
+		{{range .Options}}
+			<li><a href="{{.Arc}}">{{.Text}}</a></li>
+		{{end}}
+	</ul>
+</body>`
+
 func main() {
 	fileFlag := flag.String("file", "gopher.json", "The json file containing the story")
 	flag.Parse()
