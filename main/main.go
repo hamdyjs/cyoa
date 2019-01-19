@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"text/template"
@@ -24,6 +25,7 @@ var webTmpl = `
 </body>`
 
 func main() {
+	portFlag := flag.Int("port", 3000, "The port to serve the web application on")
 	fileFlag := flag.String("file", "gopher.json", "The json file containing the story")
 	flag.Parse()
 
@@ -40,7 +42,9 @@ func main() {
 		return
 	}
 
-	fmt.Printf("%+v", story)
+	sh := storyHandler{story}
+	fmt.Println("Listening on port:", *portFlag)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *portFlag), sh))
 }
 
 type storyHandler struct {
@@ -49,5 +53,5 @@ type storyHandler struct {
 
 func (h storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.New("").Parse(webTmpl))
-	tmpl.Execute(w, h.story)
+	tmpl.Execute(w, h.story["intro"])
 }
