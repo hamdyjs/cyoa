@@ -53,10 +53,17 @@ type storyHandler struct {
 
 func (h storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	arcKey := r.URL.Path[1:]
-	if arcKey == "" {
+	if arcKey == "" || arcKey == "/" {
 		arcKey = "intro"
 	}
 
-	tmpl := template.Must(template.New("").Parse(webTmpl))
-	tmpl.Execute(w, h.story[arcKey])
+	if arc, ok := h.story[arcKey]; ok {
+		tmpl := template.Must(template.New("").Parse(webTmpl))
+		err := tmpl.Execute(w, arc)
+		if err != nil {
+			http.Error(w, "Something went wrong!", http.StatusInternalServerError)
+		}
+	} else {
+		http.Error(w, "Arc not found!", http.StatusNotFound)
+	}
 }
