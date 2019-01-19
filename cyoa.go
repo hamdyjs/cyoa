@@ -10,9 +10,9 @@ type Story map[string]Arc
 
 // Arc is a part of the story
 type Arc struct {
-	Title   string   `json:"title"`
-	Text    []string `json:"story"`
-	Options []Option `json:"options"`
+	Title      string   `json:"title"`
+	Paragraphs []string `json:"story"`
+	Options    []Option `json:"options"`
 }
 
 // Option is what directs the story towards a different arc
