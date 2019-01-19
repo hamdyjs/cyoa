@@ -15,13 +15,13 @@ func main() {
 	fmt.Println("Running story from file:", *fileFlag)
 	file, err := os.Open(*fileFlag)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("ERROR:", err)
 		return
 	}
 
 	story, err := cyoa.JSONStory(file)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("ERROR:", err)
 		return
 	}
 
