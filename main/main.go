@@ -52,6 +52,11 @@ type storyHandler struct {
 }
 
 func (h storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	arcKey := r.URL.Path[1:]
+	if arcKey == "" {
+		arcKey = "intro"
+	}
+
 	tmpl := template.Must(template.New("").Parse(webTmpl))
-	tmpl.Execute(w, h.story["intro"])
+	tmpl.Execute(w, h.story[arcKey])
 }
