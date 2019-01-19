@@ -3,7 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
 	"os"
+	"text/template"
 
 	cyoa "github.com/hamdyjs/go_cyoa"
 )
@@ -39,4 +41,17 @@ func main() {
 	}
 
 	fmt.Printf("%+v", story)
+}
+
+func newStoryHandler(story cyoa.Story) http.Handler {
+	return storyHandler{story}
+}
+
+type storyHandler struct {
+	story cyoa.Story
+}
+
+func (h storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.New("").Parse(webTmpl))
+	tmpl.Execute(w, h.story)
 }
