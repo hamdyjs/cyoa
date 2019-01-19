@@ -43,10 +43,6 @@ func main() {
 	fmt.Printf("%+v", story)
 }
 
-func newStoryHandler(story cyoa.Story) http.Handler {
-	return storyHandler{story}
-}
-
 type storyHandler struct {
 	story cyoa.Story
 }
