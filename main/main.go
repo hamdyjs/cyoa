@@ -8,7 +8,7 @@ import (
 	"os"
 	"text/template"
 
-	cyoa "github.com/hamdyjs/go_cyoa"
+	"github.com/hamdyjs/cyoa"
 )
 
 var webTmpl = `
